@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft Clone</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #1a1a2e;
+      }
+      
+      #app {
+        width: 100%;
+        height: 100%;
+      }
+      
+      canvas {
+        display: block;
+      }
+      
+      /* Crosshair */
+      #crosshair {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 100;
+      }
+      
+      #crosshair::before,
+      #crosshair::after {
+        content: '';
+        position: absolute;
+        background: white;
+        mix-blend-mode: difference;
+      }
+      
+      #crosshair::before {
+        width: 20px;
+        height: 2px;
+        left: -10px;
+        top: -1px;
+      }
+      
+      #crosshair::after {
+        width: 2px;
+        height: 20px;
+        left: -1px;
+        top: -10px;
+      }
+      
+      /* HUD */
+      #hud {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 4px;
+        z-index: 100;
+      }
+      
+      .hotbar-slot {
+        width: 50px;
+        height: 50px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 2px solid #555;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+      }
+      
+      .hotbar-slot.active {
+        border-color: white;
+        background: rgba(255, 255, 255, 0.2);
+      }
+      
+      /* Debug info */
+      #debug {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        color: white;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        z-index: 100;
+        pointer-events: none;
+      }
+      
+      /* Instructions */
+      #instructions {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 40px;
+        border-radius: 10px;
+        z-index: 200;
+      }
+      
+      #instructions h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+      
+      #instructions p {
+        margin: 10px 0;
+        font-size: 16px;
+        color: #ccc;
+      }
+      
+      #instructions .key {
+        display: inline-block;
+        background: #333;
+        padding: 4px 8px;
+        border-radius: 4px;
+        margin: 0 2px;
+        font-family: monospace;
+      }
+      
+      #instructions.hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="crosshair"></div>
+    
+    <div id="debug">
+      <div>FPS: <span id="fps">0</span></div>
+      <div>Position: <span id="position">0, 0, 0</span></div>
+      <div>Chunks: <span id="chunks">0</span></div>
+    </div>
+    
+    <div id="hud">
+      <div class="hotbar-slot active" data-block="1">Grass</div>
+      <div class="hotbar-slot" data-block="2">Dirt</div>
+      <div class="hotbar-slot" data-block="3">Stone</div>
+      <div class="hotbar-slot" data-block="4">Wood</div>
+      <div class="hotbar-slot" data-block="5">Leaves</div>
+      <div class="hotbar-slot" data-block="6">Sand</div>
+      <div class="hotbar-slot" data-block="7">Water</div>
+      <div class="hotbar-slot" data-block="8">Brick</div>
+      <div class="hotbar-slot" data-block="9">Glass</div>
+    </div>
+    
+    <div id="instructions">
+      <h1>Minecraft Clone</h1>
+      <p>Click to start playing</p>
+      <p><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> Move</p>
+      <p><span class="key">Space</span> Jump</p>
+      <p><span class="key">Shift</span> Sprint</p>
+      <p><span class="key">Left Click</span> Break Block</p>
+      <p><span class="key">Right Click</span> Place Block</p>
+      <p><span class="key">1-9</span> Select Block</p>
+      <p><span class="key">Esc</span> Release Mouse</p>
+    </div>
+    
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
