@@ -190,7 +190,7 @@ Terrain generation runs in a separate thread using Web Workers, preventing frame
 
 | Name | Role |
 |------|------|
-| Your Name | Lead Developer |
+| adrian |Lead Developer|
 
 ---
 
